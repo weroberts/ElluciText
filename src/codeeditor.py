@@ -34,7 +34,10 @@ class CodeEditor(QPlainTextEdit):
             max_num *= 0.1
             digits += 1
 
-        space = 3 + self.fontMetrics().horizontalAdvance('9') * digits
+        # Set digits to 4 so width isn't resized until line 10,000 is reached
+        if digits <= 4:
+            digits = 4
+        space = 30 + self.fontMetrics().horizontalAdvance('9') * digits
         return space
 
     def resizeEvent(self, e):
@@ -57,7 +60,7 @@ class CodeEditor(QPlainTextEdit):
             if block.isVisible() and bottom >= event.rect().top():
                 number = str(block_number + 1)
                 painter.setPen(Qt.black)
-                width = self.line_number_area.width()
+                width = self.line_number_area.width() - 20
                 height = self.fontMetrics().height()
                 painter.drawText(0, top, width, height, Qt.AlignRight, number)
 
