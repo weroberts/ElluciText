@@ -1,21 +1,25 @@
 from line_number_area import LineNumberArea
 from PySide6.QtCore import Slot, Qt, QRect, QSize
-from PySide6.QtGui import QColor, QPainter, QTextFormat
+from PySide6.QtGui import QColor, QFont, QPainter, QTextFormat
 from PySide6.QtWidgets import QPlainTextEdit, QWidget, QTextEdit
 
 class CodeEditorStaticData():
     def getLineHighlightColor():
+        # Light blue
         return QColor(230, 230, 255, 255)
     
     def getLineNumberAreaTextColor():
+        # Dark gray
         return QColor(130, 130, 130, 255)
         
     def getLineNumberAreaRectColor():
+        # Light gray
         return QColor(230, 230, 230, 255)
         
     def getTextEditAreaTextColor():
+        # Black
         return QColor(0, 0, 90, 255)
-    
+
 class CodeEditor(QPlainTextEdit):
     def __init__(self):
         super().__init__()
@@ -27,6 +31,7 @@ class CodeEditor(QPlainTextEdit):
 
         self.update_line_number_area_width(0)
         self.highlight_current_line()
+        self.configureFont()
 
     def line_number_area_width(self):
         digits = 1
@@ -72,6 +77,11 @@ class CodeEditor(QPlainTextEdit):
 
         # QPainter needs an explicit end() in PyPy. This will become a context manager in 6.3.
         painter.end()
+        
+    def configureFont(self):
+        font = QFont("Monaco", 12)
+        font.setStyleHint(QFont.StyleHint.Monospace)
+        self.setFont(font)
 
     @Slot()
     def update_line_number_area_width(self, newBlockCount):
