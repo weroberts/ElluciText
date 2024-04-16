@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from codeeditor import CodeEditor
+from code_editor import CodeEditor
 
 if __name__ == "__main__":
     app = QApplication([])

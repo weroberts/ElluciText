@@ -1,20 +1,21 @@
+from line_number_area import LineNumberArea
 from PySide6.QtCore import Slot, Qt, QRect, QSize
 from PySide6.QtGui import QColor, QPainter, QTextFormat
 from PySide6.QtWidgets import QPlainTextEdit, QWidget, QTextEdit
 
-
-class LineNumberArea(QWidget):
-    def __init__(self, editor):
-        QWidget.__init__(self, editor)
-        self._code_editor = editor
-
-    def sizeHint(self):
-        return QSize(self._code_editor.line_number_area_width(), 0)
-
-    def paintEvent(self, event):
-        self._code_editor.lineNumberAreaPaintEvent(event)
-
-
+class CodeEditorStaticData():
+    def getLineHighlightColor():
+        return QColor(230, 230, 255, 255)
+    
+    def getLineNumberAreaTextColor():
+        return QColor(130, 130, 130, 255)
+        
+    def getLineNumberAreaRectColor():
+        return QColor(230, 230, 230, 255)
+        
+    def getTextEditAreaTextColor():
+        return QColor(0, 0, 90, 255)
+    
 class CodeEditor(QPlainTextEdit):
     def __init__(self):
         super().__init__()
@@ -49,7 +50,7 @@ class CodeEditor(QPlainTextEdit):
 
     def lineNumberAreaPaintEvent(self, event):
         painter = QPainter(self.line_number_area)
-        painter.fillRect(event.rect(), Qt.lightGray)
+        painter.fillRect(event.rect(), CodeEditorStaticData.getLineNumberAreaRectColor())
         block = self.firstVisibleBlock()
         block_number = block.blockNumber()
         offset = self.contentOffset()
@@ -59,7 +60,7 @@ class CodeEditor(QPlainTextEdit):
         while block.isValid() and top <= event.rect().bottom():
             if block.isVisible() and bottom >= event.rect().top():
                 number = str(block_number + 1)
-                painter.setPen(Qt.black)
+                painter.setPen(CodeEditorStaticData.getLineNumberAreaTextColor())
                 width = self.line_number_area.width() - 20
                 height = self.fontMetrics().height()
                 painter.drawText(0, top, width, height, Qt.AlignRight, number)
@@ -94,7 +95,7 @@ class CodeEditor(QPlainTextEdit):
         if not self.isReadOnly():
             selection = QTextEdit.ExtraSelection()
 
-            line_color = QColor(Qt.yellow).lighter(160)
+            line_color = QColor(CodeEditorStaticData.getLineHighlightColor())
             selection.format.setBackground(line_color)
 
             selection.format.setProperty(QTextFormat.FullWidthSelection, True)
