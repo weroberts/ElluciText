@@ -19,6 +19,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Install libEGL
+        run: sudo apt-get install ffmpeg libsm6 libxext6 -y
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
