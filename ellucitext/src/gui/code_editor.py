@@ -1,4 +1,4 @@
-from line_number_area import LineNumberArea
+from gui.line_number_area import LineNumberArea
 from PySide6.QtCore import Slot, Qt, QRect, QSize
 from PySide6.QtGui import QColor, QFont, QPainter, QTextFormat
 from PySide6.QtWidgets import QPlainTextEdit, QWidget, QTextEdit
