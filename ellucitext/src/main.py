@@ -1,11 +1,9 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from code_editor import CodeEditor
+from gui.builder.code_editor_builder import CodeEditorBuilder
 
 if __name__ == "__main__":
     app = QApplication([])
-    editor = CodeEditor()
-    editor.setWindowTitle("ElluciText")
-    editor.setGeometry(0, 0, 800, 600)
+    editor = CodeEditorBuilder().build("ElluciText", 800, 600)
     editor.show()
     sys.exit(app.exec())
