@@ -4,11 +4,11 @@
 name: my qt ci in github actions
 on: [push, pull_request]
 jobs:
-  Linux:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os : [windows-latest]
+        os : [windows-latest, macos-latest]
         python: ["3.10"]
     env:
       DISPLAY: ':99.0'
