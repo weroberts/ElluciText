@@ -26,4 +26,4 @@ jobs:
     - name: Test with pytest
       run: |
         cd ellucitext/src
-        python -v -m pytest ../tests/
+        python -m pytest ../tests/
